@@ -42,7 +42,7 @@ const Products = () => {
             <div className="w-full">
               <div className="text-center">
                 <h2 className="font-extrabold text-3xl">SHOP THE LOOK</h2>
-                <p className="text-sm text-gray-400 my-4">Our latest endeavour features designs from around the world with materials so comfortable you<br/>won't want to wear anything else every again.</p>
+                <p className="text-sm text-gray-400 my-4">Our latest endeavour features designs from around the world with materials so comfortable you<br/>won&apos;t want to wear anything else every again.</p>
               </div>
               <div className="flex justify-between items-center">
                 <div className="">Sort by Featured</div>
