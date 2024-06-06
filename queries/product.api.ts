@@ -1,13 +1,10 @@
-import { products } from "@/services/product.service"
-import { IProductsProps } from "@/types/product.types"
+import { getProducts } from "@/services/product.service"
 import { useQuery } from "react-query"
 
-export const useProducts = (params:IProductsProps) => {
+export const useGetProducts = () => {
     return useQuery({
-        queryKey: ['get', 'products', params],
-        queryFn: async () => {
-            let result = await products(params)
-            return result
-        }
+        queryKey: ['get', 'products'],
+        queryFn:getProducts,
+        keepPreviousData: true
     })
 }

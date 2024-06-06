@@ -1,5 +1,5 @@
 export interface IProductsProps {
-    page ?: number;
+    count ?: number;
     gender ?: string;
     category ?: string;
     search ?: string;
@@ -7,15 +7,29 @@ export interface IProductsProps {
 export interface IProduct {
     id: number;
     name: string;
-    description: string;
-    image: string;
-    price: number;
     slug: string;
-    stock_quantity: number;
-    category: string;
+    category: {
+        name : string;
+        slug : string;
+    }[];
+    image: string;
+    description: string;
+    price: number;
+    size : string[];
+    products : {
+        size : string;
+        availableColor : {
+            color : string;
+            quantity : number;
+        }[];
+    }[];
 }
-export interface ProductsResponse {
+export interface ProductsResponse extends Pagination{
     data : IProduct[];
+}
+
+
+export interface Pagination {
     links : {
         first : null | string;
         last : null | string;
