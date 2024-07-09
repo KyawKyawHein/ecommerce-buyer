@@ -11,8 +11,9 @@ import Products from "./components/Products";
 import Footer from "./components/Footer";
 
 export default function Home() {
-  // const { data: menProducts, isLoading: menProductsLoading } = useGetProducts();
-  // const {data:womenProducts,isLoading:womenProductsLoading} = useGetProducts()
+  const { data: menProducts, isLoading: menProductsLoading } = useGetProducts(undefined,'men');
+  const {data:womenProducts,isLoading:womenProductsLoading} = useGetProducts(undefined,'women')
+  
   return (
     <div className="">
       {/* {menProductsLoading || womenProductsLoading ? (
@@ -21,8 +22,8 @@ export default function Home() {
         <>
           <CarouselSlide />
           <CategoryLayout />
-          {/* <Trending products={menProducts?.data} title="MEN'S TRENDING" />
-          <Trending products={womenProducts?.data} title="WOMEN'S TRENDING" /> */}
+          <Trending products={menProducts} title="MEN'S TRENDING" />
+          <Trending products={womenProducts} title="WOMEN'S TRENDING" />
           <Faq/>
           {/* <Company/> */}
           <Recommend/>

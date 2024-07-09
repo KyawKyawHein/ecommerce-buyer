@@ -1,15 +1,27 @@
 "use client";
 import { motion } from "framer-motion";
 import { Grip, GripHorizontal, GripVertical } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useGetProducts } from "@/queries/product.api";
 import SingleProduct from "./SingleProduct";
+import { IProduct } from "@/types/product.types";
 const Products = () => {
   const [viewThree, setViewThree] = useState<boolean>(true);
   const [viewTwo, setViewTwo] = useState<boolean>(false);
   const [listView, setListView] = useState<boolean>(false);
-  const { data: products, isLoading: productsLoading } = useGetProducts();
-  console.log(products);
+  const [showProducts, setShowProducts] = useState<IProduct[]>([]);
+  const [pageCount, setPageCount] = useState(1);
+  const { data: products, isLoading: productsLoading } =
+    useGetProducts(pageCount);
+  const loadMoreProduct = () => {
+    setPageCount(pageCount + 1);
+  };
+  useEffect(() => {
+    if (products?.data) {
+      setShowProducts(() => [...showProducts, ...products?.data]);
+    }
+  }, [products]);
+  console.log(showProducts);
 
   const changeLayout = (layout: string) => {
     switch (layout) {
@@ -34,15 +46,20 @@ const Products = () => {
   };
   return (
     <>
-      {productsLoading ? (
+      {/* {productsLoading ? (
         <h1>Loading</h1>
-      ) : (
+      ) : ( */}
         <div className="flex justify-center my-10">
           <div className="w-full md:w-[1400px]">
             <div className="w-full">
               <div className="text-center">
                 <h2 className="font-extrabold text-3xl">SHOP THE LOOK</h2>
-                <p className="text-sm text-gray-400 my-4">Our latest endeavour features designs from around the world with materials so comfortable you<br/>won&apos;t want to wear anything else every again.</p>
+                <p className="text-sm text-gray-400 my-4">
+                  Our latest endeavour features designs from around the world
+                  with materials so comfortable you
+                  <br />
+                  won&apos;t want to wear anything else every again.
+                </p>
               </div>
               <div className="flex justify-between items-center">
                 <div className="">Sort by Featured</div>
@@ -88,7 +105,7 @@ const Products = () => {
                   viewTwo && "md:grid grid-cols-2"
                 } ${listView && "block"} md:gap-4`}
               >
-                {products?.data.map((product) => (
+                {showProducts?.map((product) => (
                   <SingleProduct
                     key={product.id}
                     {...product}
@@ -105,7 +122,7 @@ const Products = () => {
                 </p>
                 {products?.meta.to != products?.meta.total && (
                   <button
-                    // onClick={loadMoreProduct}
+                    onClick={loadMoreProduct}
                     className="font-extrabold bg-gray-200 md:px-10 md:py-3 rounded hover:bg-black hover:text-white"
                   >
                     Load more
@@ -115,7 +132,7 @@ const Products = () => {
             </div>
           </div>
         </div>
-      )}
+      {/* )} */}
     </>
   );
 };
