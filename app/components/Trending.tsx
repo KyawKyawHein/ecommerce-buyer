@@ -9,6 +9,7 @@ import {
 import Image from "next/image";
 import { IProduct } from "@/types/product.types";
 import { Heart, Images } from "lucide-react";
+import { QuickViewDialog } from "./QuickViewDialog";
 
 interface TrendingProps {
   products: IProduct[] | undefined;
@@ -68,7 +69,8 @@ const Trending = ({ products, title }: TrendingProps) => {
                     <button className="group-hover:block translate-y-20 group-hover:translate-y-0 transition-all bg-black text-white w-[90%] m-auto absolute ml-3 p-2 rounded-md bottom-3 z-30 duration-500 text-sm font-semibold">QUICK ADD</button>
                     <div className="translate-x-20 group-hover:translate-x-0 absolute right-2 top-3 transition-all duration-500 flex flex-col gap-3">
                       <button className="bg-gray-200 p-2 flex justify-center items-center rounded-full"><Heart size={20}/></button>
-                      <button className="bg-gray-200 p-2 flex justify-center items-center rounded-full"><Images size={20}/></button>
+                      {/* <button className="bg-gray-200 p-2 flex justify-center items-center rounded-full"><Images size={20}/></button> */}
+                      <QuickViewDialog slug={product.slug}/>
                     </div>
                   </div>
                   <div className="p-2">
