@@ -14,7 +14,7 @@ import { Images, Minus, Plus } from "lucide-react";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 
-export function QuickViewDialog({ slug }: { slug: string }) {
+const QuickViewDialog=({ slug }: { slug: string })=> {
   const { data: product, isLoading } = useGetProductById(slug);
   const [selectedColor,setSelectedColor] = useState<string>()
   const [selectedSize,setSelectedSize] = useState<string>()
@@ -88,3 +88,4 @@ export function QuickViewDialog({ slug }: { slug: string }) {
     </Dialog>
   );
 }
+export default QuickViewDialog;
