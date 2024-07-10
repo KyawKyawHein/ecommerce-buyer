@@ -4,6 +4,7 @@ import "./globals.css";
 import MainNavbar from "./components/MainNavbar";
 import LinkNavbar from "./components/LinkNavbar";
 import ReactQueryClientProvider from "./components/ReactQueryClientProvider";
+import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,6 +25,7 @@ export default function RootLayout({
         <MainNavbar />
         <LinkNavbar/>
         {children}
+        <Toaster/>
       </body>
       </ReactQueryClientProvider>
     </html>
