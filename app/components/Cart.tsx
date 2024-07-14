@@ -1,34 +1,23 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
+import { addQuantityCartProduct, removeQuantityCartProduct } from "@/lib/utils";
 import { useCartStore } from "@/store/cart.store";
 import { Trash, Trash2, Truck, X } from "lucide-react";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Cart = () => {
   const { addToCartStatus,setAddToCartStatus, storeProduct, setStoreProduct } = useCartStore();
   const [agreeStatus, setAgreeStatus] = useState<boolean>(false);
+  const {push} = useRouter()
 
   const addQuantity = (id: number) => {
-    const updateProduct = storeProduct.map((product) => {
-      if (product.id == id) {
-        return { ...product, quantity: product.quantity + 1 };
-      }else{
-        return {...product};
-      }
-    });
-    setStoreProduct(updateProduct);
+    setStoreProduct(addQuantityCartProduct(storeProduct,id));
   };
   const removeQuantity = (id: number) => {
-    const updateProduct = storeProduct.map((product) => {
-      if (product.id == id) {
-        return { ...product, quantity: product.quantity - 1 };
-      }else{
-        return {...product}
-      }
-    });
-    setStoreProduct(updateProduct);
+    setStoreProduct(removeQuantityCartProduct(storeProduct,id));
   };
   const handleClose = ()=>{
     setAddToCartStatus(false)
@@ -97,12 +86,12 @@ const Cart = () => {
         {/* right side  */}
         <div className="col-span-1">
           <div className="flex justify-between items-center font-bold">
-            <h1 className="text-uppercase mb-3">Total :</h1>
+            <h1 className="text-uppercase">Total :</h1>
             <h1 className="text-xl">{storeProduct.reduce((accu,currentValue)=>accu+(currentValue.price*currentValue.quantity),0)}</h1>
           </div>
           <hr />
           <div className="mt-3 flex flex-col">
-            <button className="px-5 py-4 tracking-wider bg-gray-200 rounded my-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
+            <button onClick={()=>push('/cart')} className="px-5 py-4 tracking-wider bg-gray-200 rounded my-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
               VIEW CART
             </button>
             <button className="px-5 py-4 tracking-wider bg-gray-200 rounded mb-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
