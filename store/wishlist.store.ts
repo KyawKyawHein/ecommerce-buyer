@@ -1,14 +1,14 @@
 import {create} from "zustand";
 import {IProduct} from "@/types/product.types";
 
-interface IWishlistStore {
+interface IWishlist {
     wishlist : IProduct[];
 }
-interface IWishlist extends IWishlistStore {
+interface IWishlistStore extends IWishlist {
     setWishlist : (wishlist:IProduct[])=>void;
 }
 
-export const useWishlistStore = create<IWishlist>((set)=>({
+export const useWishlistStore = create<IWishlistStore>((set)=>({
     wishlist : [],
     setWishlist : (wishlist:IProduct[])=>set({wishlist})
 }))

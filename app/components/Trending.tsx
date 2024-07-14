@@ -9,15 +9,21 @@ import {
 import Image from "next/image";
 import { IProduct } from "@/types/product.types";
 import { Heart, Images } from "lucide-react";
-import  QuickViewDialog from "./QuickViewDialog";
-import { useEffect } from "react";
+import QuickViewDialog from "./QuickViewDialog";
+import { useEffect, useState } from "react";
 import WishlistBtn from "./WishlistBtn";
+import QuickAddBtn from "./QuickAddBtn";
+import { useCartStore } from "@/store/cart.store";
 
 interface TrendingProps {
   products: IProduct[] | undefined;
   title: string;
 }
 const Trending = ({ products, title }: TrendingProps) => {
+  const {storeProduct,setStoreProduct} = useCartStore()
+  const addColor = (id:number,color:string)=>{
+    
+  }
   return (
     <div className="md:grid md:grid-cols-4 md:my-20 overflow-hidden relative pr-2">
       <div className="md:pt-5 md:col-span-1 flex flex-col items-center">
@@ -53,9 +59,7 @@ const Trending = ({ products, title }: TrendingProps) => {
                     className="absolute rounded z-0"
                     alt=""
                   />
-                  <button className="group-hover:block translate-y-20 group-hover:translate-y-0 bg-black text-white hover:bg-orange-500 hover:text-white transition-all w-[90%] m-auto absolute ml-3 p-2 rounded-md bottom-3 z-30 duration-500 text-sm font-medium">
-                    QUICK ADD
-                  </button>
+                  <QuickAddBtn product={product} />
                   <div className="translate-x-20 group-hover:translate-x-0 absolute right-2 top-3 transition-all duration-500 flex flex-col gap-3">
                     <WishlistBtn product={product} />
                     <QuickViewDialog slug={product.slug} />
@@ -76,8 +80,9 @@ const Trending = ({ products, title }: TrendingProps) => {
                         : "color"}
                     </p>
                     <div className="flex gap-3 inset-0 translate-y-16 group-hover:-translate-y-6 transition-all duration-500">
-                      {product.products[0].availableColor.map((color) => (
+                      {product.products[0].availableColor.map((color,index) => (
                         <div
+                          onClick={()=>addColor(product.id,color)}
                           className={`p-3 rounded-full`}
                           style={{ background: color.color }}
                           key={color.color}
