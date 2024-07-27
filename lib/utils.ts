@@ -27,3 +27,8 @@ export const removeQuantityCartProduct = (storeProduct:IStoreProduct[],id: numbe
   });
   return updateProduct
 };
+
+export const removeProductFromCart = (storeProduct:IStoreProduct[],id:number)=>{
+  const updateProduct = storeProduct.filter(product=>product.id != id);
+  return updateProduct;
+}

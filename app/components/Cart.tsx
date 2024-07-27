@@ -23,8 +23,7 @@ const Cart = () => {
     setAddToCartStatus(false)
   }
   const removeProductFromCart = (id:number)=>{
-    const updateProduct = storeProduct.filter(product=>product.id!= id)
-    setStoreProduct(updateProduct)
+    setStoreProduct(removeProductFromCart(storeProduct,id));
   }
 
   return (
@@ -94,7 +93,7 @@ const Cart = () => {
             <button onClick={()=>push('/cart')} className="px-5 py-4 tracking-wider bg-gray-200 rounded my-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
               VIEW CART
             </button>
-            <button className="px-5 py-4 tracking-wider bg-gray-200 rounded mb-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
+            <button onClick={()=>setAddToCartStatus(false)} className="px-5 py-4 tracking-wider bg-gray-200 rounded mb-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
               CONTINUE SHOPPING
             </button>
           </div>

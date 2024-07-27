@@ -5,13 +5,11 @@ import CategoryLayout from "./components/CategoryLayout";
 import { useGetProducts } from "@/queries/product.api";
 import Trending from "./components/Trending";
 import Faq from "./components/Faq";
-import Company from "./components/Company";
 import Recommend from "./components/Recommend";
 import Products from "./components/Products";
 import Footer from "./components/Footer";
 import { useCartStore } from "@/store/cart.store";
-import { Checkbox } from "@/components/ui/checkbox";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cart from "./components/Cart";
 
 export default function Home() {
@@ -21,8 +19,10 @@ export default function Home() {
   );
   const { data: womenProducts, isLoading: womenProductsLoading } =
     useGetProducts(undefined, "women");
-    const { addToCartStatus } = useCartStore();
-
+    const { addToCartStatus,setAddToCartStatus } = useCartStore();
+  useEffect(()=>{
+    setAddToCartStatus(false)
+  },[])
   return (
     <div className="">
       {/* {menProductsLoading || womenProductsLoading ? (
