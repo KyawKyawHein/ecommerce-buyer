@@ -19,7 +19,7 @@ import {
 } from "@/lib/utils";
 
 const CartLeft = () => {
-  const { storeProduct, setStoreProduct } = useCartStore();
+  const { storeProduct, setStoreProduct,productColors } = useCartStore();
   console.log(storeProduct);
 
   const addQuantity = (id: number) => {
@@ -61,7 +61,7 @@ const CartLeft = () => {
                 />
                 <div className="text-xs flex flex-col gap-2 justify-center">
                   <p className="">{product.name}</p>
-                  <p className="">COLOR : {product.selectedSize}</p>
+                  <p className="">COLOR : {productColors.filter(colArr=>colArr.productId==product.id).length>0 ?productColors.filter(colArr=>colArr.productId==product.id)[0].color:product.products[0].availableColor[0].color }</p>
                   <p className="">SIZE : {product.selectedSize}</p>
                 </div>
               </TableCell>

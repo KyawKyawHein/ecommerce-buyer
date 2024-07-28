@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import { useGetProducts } from "@/queries/product.api";
 import SingleProduct from "./SingleProduct";
 import { IProduct } from "@/types/product.types";
+import ProductCard from "./ProductCard";
 const Products = () => {
   const [viewThree, setViewThree] = useState<boolean>(true);
   const [viewTwo, setViewTwo] = useState<boolean>(false);
@@ -106,11 +107,18 @@ const Products = () => {
                 } ${listView && "block"} md:gap-4`}
               >
                 {showProducts?.map((product) => (
-                  <SingleProduct
+                  // <SingleProduct
+                  //   key={product.id}
+                  //   {...product}
+                  //   viewThree={viewThree}
+                  //   viewTwo={viewTwo}
+                  //   listView={listView}
+                  // />
+                  <ProductCard
                     key={product.id}
-                    {...product}
-                    viewThree={viewThree}
+                    product={product}
                     viewTwo={viewTwo}
+                    viewThree={viewThree}
                     listView={listView}
                   />
                 ))}

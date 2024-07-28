@@ -1,7 +1,7 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Progress } from "@/components/ui/progress";
-import { addQuantityCartProduct, removeQuantityCartProduct } from "@/lib/utils";
+import { addQuantityCartProduct, removeProductFromCart, removeQuantityCartProduct } from "@/lib/utils";
 import { useCartStore } from "@/store/cart.store";
 import { Trash, Trash2, Truck, X } from "lucide-react";
 import Image from "next/image";
@@ -9,7 +9,7 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Cart = () => {
-  const { addToCartStatus,setAddToCartStatus, storeProduct, setStoreProduct } = useCartStore();
+  const { addToCartStatus,setAddToCartStatus, storeProduct, setStoreProduct,productColors } = useCartStore();
   const [agreeStatus, setAgreeStatus] = useState<boolean>(false);
   const {push} = useRouter()
 
@@ -22,7 +22,7 @@ const Cart = () => {
   const handleClose = ()=>{
     setAddToCartStatus(false)
   }
-  const removeProductFromCart = (id:number)=>{
+  const removeProduct = (id:number)=>{
     setStoreProduct(removeProductFromCart(storeProduct,id));
   }
 
@@ -42,14 +42,14 @@ const Cart = () => {
           <div className="h-[200px] scrollbar-custom overflow-y-scroll">
             {storeProduct.map((product) => (
               <div className="relative flex gap-5 items-center mx-5 border p-2 rounded" key={product.id}>
-                <Trash2 onClick={()=>removeProductFromCart(product.id)} className="bg-gray-200 cursor-pointer px-1 rounded-full absolute top-[50%] left-[-11px] z-50" size={25}/>
+                <Trash2 onClick={()=>removeProduct(product.id)} className="bg-gray-200 cursor-pointer px-1 rounded-full absolute top-[50%] left-[-11px] z-50" size={25}/>
                 <div className="relative w-32 h-32">
                   <Image src={product.image} fill alt="product-image" />
                 </div>
                 <div className="flex justify-between px-4 w-full items-center gap-10">
                   <div className="text-xs">
                     <p className="font-bold mb-2">{product.name}</p>
-                    <p className="">blue / {product.selectedSize}</p>
+                    <p className="">{productColors.filter(colArr=>colArr.productId==product.id).length>0 ?productColors.filter(colArr=>colArr.productId==product.id)[0].color:product.products[0].availableColor[0].color } / {product.selectedSize}</p>
                   </div>
                   <p className="font-bold text-xs">${product.price}</p>
                   <div className="flex gap-1 items-center">
