@@ -1,13 +1,17 @@
 "use client";
+import { Button } from "@/components/ui/button";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { useCartStore } from "@/store/cart.store";
 import { IProduct } from "@/types/product.types";
 import { X } from "lucide-react";
 import React, { useEffect, useState } from "react";
+import Cart from "./Cart";
 
 const QuickAddBtn = ({ product }: { product: IProduct }) => {
   const [quickAddStatus, setQuickAddStatus] = useState(true);
-  const [selectedSize, setSelectedSize] = useState<string>();  
-  const { storeProduct,addToCartStatus,setAddToCartStatus, setStoreProduct } = useCartStore();
+  const [selectedSize, setSelectedSize] = useState<string>();
+  const { storeProduct, addToCartStatus, setAddToCartStatus, setStoreProduct } =
+    useCartStore();
 
   const closeBtn = () => {
     setSelectedSize("");
@@ -20,22 +24,21 @@ const QuickAddBtn = ({ product }: { product: IProduct }) => {
     const productExist = storeProduct.some((pro) => pro.id == product.id);
     if (productExist) {
       const updateProduct = storeProduct.map((pro) => {
-        pro.id === product.id ? { ...pro,quantity:1, selectedSize: size } : pro;
+        pro.id === product.id
+          ? { ...pro, quantity: 1, selectedSize: size }
+          : pro;
       });
-      console.log(product.products.filter(p=>p.size==selectedSize));
-      
+      console.log(product.products.filter((p) => p.size == selectedSize));
+
       setStoreProduct(updateProduct);
     } else {
-      setStoreProduct([...storeProduct, { ...product,quantity:1, selectedSize: size }]);
+      setStoreProduct([
+        ...storeProduct,
+        { ...product, quantity: 1, selectedSize: size },
+      ]);
     }
   };
   const addToCartDisabled = !selectedSize;
-  // useEffect(()=>{
-  //   const productExist = storeProduct.some((pro)=>pro.id == product.id&& pro.selectedSize == selectedSize);
-  //   if(!productExist){
-  //     setSelectedSize('')
-  //   }
-  // },[storeProduct])
   return (
     <div>
       {quickAddStatus ? (
@@ -66,15 +69,22 @@ const QuickAddBtn = ({ product }: { product: IProduct }) => {
               </div>
             ))}
           </div>
-          <button
-            disabled={addToCartDisabled}
-            className={`bg-white text-black w-full p-1 py-2 rounded transition-all ${
-              !selectedSize && "select-none bg-gray-400"
-            }`}
-            onClick={()=>setAddToCartStatus(true)}
-          >
-            Add To Cart
-          </button>
+          <Dialog>
+            <DialogTrigger asChild>
+              <button
+                disabled={addToCartDisabled}
+                className={`bg-white text-black w-full p-1 py-2 rounded transition-all ${
+                  !selectedSize && "select-none bg-gray-400"
+                }`}
+                onClick={() => setAddToCartStatus(true)}
+              >
+                Add To Cart
+              </button>
+            </DialogTrigger>
+            <DialogContent className="min-w-[1000px]">
+                <Cart/>
+            </DialogContent>
+          </Dialog>
         </div>
       )}
     </div>

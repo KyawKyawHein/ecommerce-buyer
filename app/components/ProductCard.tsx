@@ -31,8 +31,6 @@ const ProductCard = ({
       },
     ]);
   };
-  console.log(product);
-
   return (
     <div className={`relative group ${listView && "flex gap-5 my-5"}`}>
       <div

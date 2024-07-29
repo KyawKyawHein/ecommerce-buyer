@@ -1,7 +1,12 @@
 "use client";
 import { Checkbox } from "@/components/ui/checkbox";
+import { Dialog, DialogContent } from "@/components/ui/dialog";
 import { Progress } from "@/components/ui/progress";
-import { addQuantityCartProduct, removeProductFromCart, removeQuantityCartProduct } from "@/lib/utils";
+import {
+  addQuantityCartProduct,
+  removeProductFromCart,
+  removeQuantityCartProduct,
+} from "@/lib/utils";
 import { useCartStore } from "@/store/cart.store";
 import { Trash, Trash2, Truck, X } from "lucide-react";
 import Image from "next/image";
@@ -9,26 +14,35 @@ import { useRouter } from "next/navigation";
 import React, { useEffect, useState } from "react";
 
 const Cart = () => {
-  const { addToCartStatus,setAddToCartStatus, storeProduct, setStoreProduct,productColors } = useCartStore();
+  const {
+    addToCartStatus,
+    setAddToCartStatus,
+    storeProduct,
+    setStoreProduct,
+    productColors,
+  } = useCartStore();
   const [agreeStatus, setAgreeStatus] = useState<boolean>(false);
-  const {push} = useRouter()
+  const { push } = useRouter();
 
   const addQuantity = (id: number) => {
-    setStoreProduct(addQuantityCartProduct(storeProduct,id));
+    setStoreProduct(addQuantityCartProduct(storeProduct, id));
   };
   const removeQuantity = (id: number) => {
-    setStoreProduct(removeQuantityCartProduct(storeProduct,id));
+    setStoreProduct(removeQuantityCartProduct(storeProduct, id));
   };
-  const handleClose = ()=>{
-    setAddToCartStatus(false)
-  }
-  const removeProduct = (id:number)=>{
-    setStoreProduct(removeProductFromCart(storeProduct,id));
-  }
+  const handleClose = () => {
+    setAddToCartStatus(false);
+  };
+  const removeProduct = (id: number) => {
+    setStoreProduct(removeProductFromCart(storeProduct, id));
+  };
 
   return (
-    <div className="fixed left-[350px] top-[40px] w-[1000px] border p-5 rounded bg-white flex flex-col justify-center z-50">
-      <X onClick={handleClose} className="absolute right-[-30px] top-[-20px] text-red-500 font-bold cursor-pointer"/>
+    <div className="rounded flex flex-col justify-center z-50">
+      {/* <X
+        onClick={handleClose}
+        className="absolute right-[-30px] top-[-20px] text-red-500 font-bold cursor-pointer"
+      /> */}
       <div className="header flex items-center gap-6">
         <p className="text-xl font-bold">Your Order</p>
         <p className="text-uppercase">
@@ -41,15 +55,31 @@ const Cart = () => {
         <div className="col-span-2">
           <div className="h-[200px] scrollbar-custom overflow-y-scroll">
             {storeProduct.map((product) => (
-              <div className="relative flex gap-5 items-center mx-5 border p-2 rounded" key={product.id}>
-                <Trash2 onClick={()=>removeProduct(product.id)} className="bg-gray-200 cursor-pointer px-1 rounded-full absolute top-[50%] left-[-11px] z-50" size={25}/>
+              <div
+                className="relative flex gap-5 items-center mx-5 border p-2 rounded"
+                key={product.id}
+              >
+                <Trash2
+                  onClick={() => removeProduct(product.id)}
+                  className="bg-gray-200 cursor-pointer px-1 rounded-full absolute top-[50%] left-[-11px] z-50"
+                  size={25}
+                />
                 <div className="relative w-32 h-32">
                   <Image src={product.image} fill alt="product-image" />
                 </div>
                 <div className="flex justify-between px-4 w-full items-center gap-10">
                   <div className="text-xs">
                     <p className="font-bold mb-2">{product.name}</p>
-                    <p className="">{productColors.filter(colArr=>colArr.productId==product.id).length>0 ?productColors.filter(colArr=>colArr.productId==product.id)[0].color:product.products[0].availableColor[0].color } / {product.selectedSize}</p>
+                    <p className="">
+                      {productColors.filter(
+                        (colArr) => colArr.productId == product.id
+                      ).length > 0
+                        ? productColors.filter(
+                            (colArr) => colArr.productId == product.id
+                          )[0].color
+                        : product.products[0].availableColor[0].color}{" "}
+                      / {product.selectedSize}
+                    </p>
                   </div>
                   <p className="font-bold text-xs">${product.price}</p>
                   <div className="flex gap-1 items-center">
@@ -70,14 +100,23 @@ const Cart = () => {
                       -
                     </button>
                   </div>
-                  <p className="font-bold">${product.price * product.quantity}</p>
+                  <p className="font-bold">
+                    ${product.price * product.quantity}
+                  </p>
                 </div>
               </div>
             ))}
           </div>
           <div className="mt-5">
-            <h4 className="font-bold">FREE SHIPPING FOR ANY ORDERS ABOVE <span className="text-green-600">$155.60</span></h4>
-            <p className="flex gap-3 items-center text-xs my-2 mb-3 text-green-600 font-bold">CONGRATULATIONS! YOU'VE GOT FREE SHIPPING! <span className=""><Truck size={17}/></span>
+            <h4 className="font-bold">
+              FREE SHIPPING FOR ANY ORDERS ABOVE{" "}
+              <span className="text-green-600">$155.60</span>
+            </h4>
+            <p className="flex gap-3 items-center text-xs my-2 mb-3 text-green-600 font-bold">
+              CONGRATULATIONS! YOU'VE GOT FREE SHIPPING!{" "}
+              <span className="">
+                <Truck size={17} />
+              </span>
             </p>
             <Progress value={33} className="text-blue-500" />
           </div>
@@ -86,14 +125,26 @@ const Cart = () => {
         <div className="col-span-1">
           <div className="flex justify-between items-center font-bold">
             <h1 className="text-uppercase">Total :</h1>
-            <h1 className="text-xl">{storeProduct.reduce((accu,currentValue)=>accu+(currentValue.price*currentValue.quantity),0)}</h1>
+            <h1 className="text-xl">
+              {storeProduct.reduce(
+                (accu, currentValue) =>
+                  accu + currentValue.price * currentValue.quantity,
+                0
+              )}
+            </h1>
           </div>
           <hr />
           <div className="mt-3 flex flex-col">
-            <button onClick={()=>push('/cart')} className="px-5 py-4 tracking-wider bg-gray-200 rounded my-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
+            <button
+              onClick={() => push("/cart")}
+              className="px-5 py-4 tracking-wider bg-gray-200 rounded my-3 text-xs hover:text-white hover:bg-black transition-all duration-500"
+            >
               VIEW CART
             </button>
-            <button onClick={()=>setAddToCartStatus(false)} className="px-5 py-4 tracking-wider bg-gray-200 rounded mb-3 text-xs hover:text-white hover:bg-black transition-all duration-500">
+            <button
+              onClick={() => setAddToCartStatus(false)}
+              className="px-5 py-4 tracking-wider bg-gray-200 rounded mb-3 text-xs hover:text-white hover:bg-black transition-all duration-500"
+            >
               CONTINUE SHOPPING
             </button>
           </div>
