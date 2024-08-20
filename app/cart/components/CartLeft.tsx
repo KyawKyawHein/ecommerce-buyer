@@ -19,7 +19,7 @@ import {
 } from "@/lib/utils";
 
 const CartLeft = () => {
-  const { storeProduct, setStoreProduct,productColors } = useCartStore();
+  const { storeProduct, setStoreProduct, productColors } = useCartStore();
   console.log(storeProduct);
 
   const addQuantity = (id: number) => {
@@ -32,8 +32,9 @@ const CartLeft = () => {
     setStoreProduct(removeProductFromCart(storeProduct, id));
   };
   return (
+    <div className="h-[500px] overflow-y-auto relative w-full">
       <Table>
-        <TableHeader className="bg-gray-100">
+        <TableHeader className="bg-gray-100 sticky top-0 left-0 z-30">
           <TableRow>
             <TableHead className="w-[20px]"></TableHead>
             <TableHead className="">PRODUCT</TableHead>
@@ -42,7 +43,7 @@ const CartLeft = () => {
             <TableHead className="text-right">TOTAL</TableHead>
           </TableRow>
         </TableHeader>
-        <TableBody className="overflow-y-scroll h-100">
+        <TableBody>
           {storeProduct.map((product) => (
             <TableRow key={product.id}>
               <TableCell className="text-center">
@@ -61,7 +62,16 @@ const CartLeft = () => {
                 />
                 <div className="text-xs flex flex-col gap-2 justify-center">
                   <p className="">{product.name}</p>
-                  <p className="">COLOR : {productColors.filter(colArr=>colArr.productId==product.id).length>0 ?productColors.filter(colArr=>colArr.productId==product.id)[0].color:product.products[0].availableColor[0].color }</p>
+                  <p className="">
+                    COLOR :{" "}
+                    {productColors.filter(
+                      (colArr) => colArr.productId == product.id
+                    ).length > 0
+                      ? productColors.filter(
+                          (colArr) => colArr.productId == product.id
+                        )[0].color
+                      : product.products[0].availableColor[0].color}
+                  </p>
                   <p className="">SIZE : {product.selectedSize}</p>
                 </div>
               </TableCell>
@@ -95,6 +105,7 @@ const CartLeft = () => {
           ))}
         </TableBody>
       </Table>
+    </div>
   );
 };
 

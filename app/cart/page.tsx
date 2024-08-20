@@ -12,12 +12,12 @@ const Cart = () => {
   
   return (
     <div className="w-[1200px] m-auto">
-      <h1 className="text-3xl font-extrabold text-center tracking-wider mt-16">
+      <h1 className="text-3xl font-extrabold text-center tracking-wider mt-10">
         Your Shopping Cart
       </h1>
       <div>
         {storeProduct.length <1 ? (
-          <div className="mt-10">
+          <div className="mt-8">
             <h1 className="font-bold mb-8 text-2xl tracking-wider">Your Cart is Currently Empty.</h1>
             <p className="mb-5">
               Before proceeding to checkout you must add some products to your
@@ -27,7 +27,7 @@ const Cart = () => {
             <Button onClick={()=>push('/')} variant={"default"} className="text-xs">CONTINUE SHOPPING</Button>
           </div>
         ) : (
-          <div className="mt-10 flex gap-10">
+          <div className="mt-10 flex gap-10 h-full">
             <CartLeft />
             <CartRight />
           </div>

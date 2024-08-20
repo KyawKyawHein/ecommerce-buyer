@@ -53,7 +53,7 @@ const Cart = () => {
       <div className="grid grid-cols-3 gap-5 mt-4 mb-5">
         {/* left side  */}
         <div className="col-span-2">
-          <div className="h-[200px] scrollbar-custom overflow-y-scroll">
+          <div className="h-[200px] overflow-y-scroll">
             {storeProduct.map((product) => (
               <div
                 className="relative flex gap-5 items-center mx-5 border p-2 rounded"
@@ -160,6 +160,7 @@ const Cart = () => {
               </p>
             </div>
             <button
+              onClick={()=>push('/checkout')}
               disabled={!agreeStatus}
               className={`px-5 py-4 w-full tracking-widest rounded mb-3 text-xs text-white font-medium transition-all duration-500 ${
                 agreeStatus ? "bg-black hover:bg-orange-500" : "bg-gray-500 "

@@ -39,7 +39,7 @@ const Trending = ({ products, title }: TrendingProps) => {
           }}
           className="w-full"
         >
-          <div className="absolute top-[50px] z-50 left-[-200px]">
+          <div className="absolute top-[50px] z-40 left-[-200px]">
             <CarouselPrevious className="font-3xl" />
             <CarouselNext className="font-3xl" />
           </div>

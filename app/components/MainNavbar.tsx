@@ -22,7 +22,7 @@ const MainNavbar = () => {
     }
   },[])
   return (
-    <div className={`bg-black text-white p-5 flex justify-between items-center w-full z-50 ${sticky && 'sticky top-0'}`}>
+    <div className={`bg-black z-50 text-white p-5 flex justify-between items-center w-full z-50 ${sticky && 'sticky top-0'}`}>
       <form action="" className="bg-white p-0 relative rounded-xl">
         <input
           type="text"
