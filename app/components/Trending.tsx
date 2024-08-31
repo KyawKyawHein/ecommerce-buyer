@@ -44,7 +44,7 @@ const Trending = ({ products, title }: TrendingProps) => {
             <CarouselNext className="font-3xl" />
           </div>
           <CarouselContent>
-            {products?.map((product, index) => (
+            {products && products.map((product, index) => (
               <CarouselItem
                 key={index}
                 className="md:basis-1/3 lg:basis-1/4"

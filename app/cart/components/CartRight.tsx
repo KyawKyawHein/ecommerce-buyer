@@ -11,6 +11,7 @@ import { DialogOverlay } from "@/components/ui/dialog";
 import { useLocationStore } from "@/store/location.store";
 import { ICity, IRegion } from "@/types/location.types";
 import { Progress } from "@/components/ui/progress";
+import { cn } from "@/lib/utils";
 
 const CartRight = () => {
   const { push } = useRouter();
@@ -82,9 +83,17 @@ const CartRight = () => {
               <h1 className="text-uppercase font-bold">Shipping :</h1>
               <div>
                 {region && city ? (
-                  <p className="text-uppercase font-bold">
-                    {city.delivery_cost} MMK
-                  </p>
+                  <div className="flex gap-2 items-center font-bold">
+                    <p
+                      className={cn(
+                        "text-uppercase ",
+                        totalPrice > 30000 && "line-through"
+                      )}
+                    >
+                      {totalPrice<30000 && "+"}{city.delivery_cost} MMK
+                    </p>
+                    {totalPrice > 30000 && <p className="">0 MMK</p>}
+                  </div>
                 ) : (
                   <p className="text-xs">
                     Shipping & taxes calculated at checkout
@@ -152,15 +161,20 @@ const CartRight = () => {
           <div className="flex flex-col mb-8">
             {totalPrice < 30000 ? (
               <p className="font-bold text-xs mb-2">
-                SPEND {30000 - totalPrice} FOR FREE SHIPPING
+                SPEND {30000 - totalPrice} MMK FOR FREE SHIPPING
               </p>
             ) : (
               <p className="font-bold text-xs mb-2">YOU GOT FREE SHIPPING</p>
             )}
             <Progress
               value={(totalPrice / 30000) * 100}
-              className={`bg-white border ${(totalPrice / 30000) * 100 < 100 ? 'bg-orange-500' : 'bg-green-500'}`}
+              className={`bg-white border ${
+                (totalPrice / 30000) * 100 < 100
+                  ? "bg-orange-500"
+                  : "bg-green-500"
+              }`}
             />
+            <p className="mt-2 text-xs">Free shipping for any order above <span className="text-green-500">30000 MMK</span></p>
           </div>
           <div className="">
             <p className="font-bold text-xs mb-2">

@@ -125,10 +125,10 @@ const Products = () => {
               </motion.div>
               <div className="text-center">
                 <p className="my-3 ">
-                  Showing <b>{products?.meta.to}</b> of{" "}
-                  <b>{products?.meta.total}</b> products
+                  Showing <b>{products?.meta?.to}</b> of{" "}
+                  <b>{products?.meta?.total}</b> products
                 </p>
-                {products?.meta.to != products?.meta.total && (
+                {products?.meta?.to != products?.meta?.total && (
                   <button
                     onClick={loadMoreProduct}
                     className="font-extrabold bg-gray-200 md:px-10 md:py-3 rounded hover:bg-black hover:text-white"
