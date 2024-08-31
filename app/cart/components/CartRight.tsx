@@ -32,7 +32,7 @@ const CartRight = () => {
       0
     );
   }, [storeProduct]);
-  const changeStatus = (e) => {
+  const changeStatus = (e: React.MouseEvent) => {
     e.stopPropagation();
     setChangeLocationStatus(!changeLocationStatus);
   };
@@ -48,7 +48,7 @@ const CartRight = () => {
     setCity(null);
   };
   useEffect(() => {
-    const handleClick = (event) => {
+    const handleClick = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
         setChangeLocationStatus(false);
       }
